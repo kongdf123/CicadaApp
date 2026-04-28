@@ -49,6 +49,10 @@ namespace Cicada.UI
 
                     //services.AddSingleton<PluginLoader>();
                     //services.AddSingleton<List<IModulePlugin>>();
+                    services.AddSingleton<MqttTelemetryService>();
+                    services.AddSingleton<InfluxService>();
+                    services.AddSingleton<IPipelineModule, InfluxModule>();
+
                 });
 
             var host = builder.Build();
@@ -68,7 +72,10 @@ namespace Cicada.UI
             //_ = Task.Run(() => dispatcher.StartAsync(cts.Token));
 
             // 2️⃣ 最后启动 producer
-            _ = Task.Run(() => producer.StartAsync(cts.Token));
+            //_ = Task.Run(() => producer.StartAsync(cts.Token));
+
+            var mqtt = host.Services.GetRequiredService<MqttTelemetryService>();
+            _ = Task.Run(() => mqtt.StartAsync(cts.Token));
 
             SetupGlobalExceptionHandling(host);
 

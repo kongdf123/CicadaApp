@@ -24,7 +24,7 @@ namespace Cicada.Worker
                     services.AddHostedService<Worker>();
 
                     services.AddSingleton<TelemetryChannel>();
-                    services.AddSingleton<PluginEngine>();
+                    //services.AddSingleton<PluginEngine>();
                     services.AddSingleton<TelemetryConsumer>();
                     services.AddSingleton<TelemetryProducer>();
                 })
