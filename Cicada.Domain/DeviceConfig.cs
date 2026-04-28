@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Cicada.UI.Models
+{
+    public class DeviceConfig
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Endpoint { get; set; }
+        public string[] Tags { get; set; }
+    }
+}

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35728.132 d17.12
+VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cicada.Biz", "Cicada.Biz\Cicada.Biz.csproj", "{78AE391F-0EF6-4DBF-B453-ACC4F1D14026}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cicada.Infra", "Cicada.Infra\Cicada.Infra.csproj", "{7003071E-22FD-49E9-9003-22248AF7D3FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cicada.UI", "Cicada.UI\Cicada.UI.csproj", "{BC4C1C0A-C8B2-4940-92EA-5C8F4BB43E3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cicada.Worker", "Cicada.Worker\Cicada.Worker.csproj", "{93010A6C-946E-4F0C-A644-4900AF07E013}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{BC4C1C0A-C8B2-4940-92EA-5C8F4BB43E3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC4C1C0A-C8B2-4940-92EA-5C8F4BB43E3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC4C1C0A-C8B2-4940-92EA-5C8F4BB43E3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93010A6C-946E-4F0C-A644-4900AF07E013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93010A6C-946E-4F0C-A644-4900AF07E013}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93010A6C-946E-4F0C-A644-4900AF07E013}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93010A6C-946E-4F0C-A644-4900AF07E013}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

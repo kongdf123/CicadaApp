@@ -1,6 +1,9 @@
+﻿using Cicada.Biz.Plugins;
+using Cicada.Biz.Services;
 using Cicada.Domain.Interfaces;
 using Cicada.Infra.Data;
 using Cicada.Infra.Repositories;
+using Cicada.UI.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -36,12 +39,36 @@ namespace Cicada.UI
                     });
                     services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
                     services.AddSingleton<DbInitializer>();
+                    services.AddSingleton<TelemetryChannel>();
+                    services.AddSingleton<TelemetryProducer>();
+                    services.AddSingleton<TelemetryConsumer>();
+                    services.AddSingleton<AlarmService>();
+
+                    services.AddSingleton<TelemetryUiDispatcher>();
+                    services.Configure<List<DeviceConfig>>(context.Configuration.GetSection("Devices"));
+
+                    //services.AddSingleton<PluginLoader>();
+                    //services.AddSingleton<List<IModulePlugin>>();
                 });
 
             var host = builder.Build();
 
             //var dbInit = host.Services.GetRequiredService<DbInitializer>();
             //dbInit.Initialize();
+
+            var producer = host.Services.GetRequiredService<TelemetryProducer>();
+            var consumer = host.Services.GetRequiredService<TelemetryConsumer>();
+            var dispatcher = host.Services.GetRequiredService<TelemetryUiDispatcher>();
+
+            var cts = new CancellationTokenSource();
+
+            // Start background tasks for producer and consumer 
+            // 1️⃣ 先启动 consumer + dispatcher（必须先订阅）
+            _ = Task.Run(() => consumer.StartAsync(cts.Token));
+            //_ = Task.Run(() => dispatcher.StartAsync(cts.Token));
+
+            // 2️⃣ 最后启动 producer
+            _ = Task.Run(() => producer.StartAsync(cts.Token));
 
             SetupGlobalExceptionHandling(host);
 
