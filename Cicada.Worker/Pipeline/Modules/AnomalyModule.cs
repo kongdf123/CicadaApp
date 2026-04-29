@@ -11,7 +11,7 @@ namespace Cicada.Biz.Plugins
     {
         private readonly List<double> _buffer = new();
 
-        public Task ProcessAsync(Telemetry data)
+        public Task ProcessAsync(Telemetry data, CancellationToken token = default)
         {
             _buffer.Add(data.Value);
 

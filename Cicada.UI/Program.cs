@@ -4,6 +4,8 @@ using Cicada.Domain.Interfaces;
 using Cicada.Infra.Data;
 using Cicada.Infra.Repositories;
 using Cicada.UI.Models;
+using Cicada.UI.Services;
+using LiveChartsCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,20 +41,22 @@ namespace Cicada.UI
                     });
                     services.AddSingleton<ITelemetryRepository, TelemetryRepository>();
                     services.AddSingleton<DbInitializer>();
-                    services.AddSingleton<TelemetryChannel>();
-                    services.AddSingleton<TelemetryProducer>();
-                    services.AddSingleton<TelemetryConsumer>();
-                    services.AddSingleton<AlarmService>();
+                    //services.AddSingleton<TelemetryChannel>();
+                    //services.AddSingleton<TelemetryProducer>();
+                    //services.AddSingleton<TelemetryConsumer>();
+                    //services.AddSingleton<AlarmService>();
 
                     services.AddSingleton<TelemetryUiDispatcher>();
                     services.Configure<List<DeviceConfig>>(context.Configuration.GetSection("Devices"));
 
                     //services.AddSingleton<PluginLoader>();
                     //services.AddSingleton<List<IModulePlugin>>();
-                    services.AddSingleton<MqttTelemetryService>();
+                    //services.AddSingleton<MqttTelemetryService>();
                     services.AddSingleton<InfluxService>();
-                    services.AddSingleton<IPipelineModule, InfluxModule>();
+                    //services.AddSingleton<IPipelineModule, InfluxModule>();
 
+                    services.AddSingleton<AlarmUiDispatcher>();
+                    services.AddSingleton<AlarmForm>();
                 });
 
             var host = builder.Build();
@@ -61,21 +65,24 @@ namespace Cicada.UI
             //dbInit.Initialize();
 
             var producer = host.Services.GetRequiredService<TelemetryProducer>();
-            var consumer = host.Services.GetRequiredService<TelemetryConsumer>();
-            var dispatcher = host.Services.GetRequiredService<TelemetryUiDispatcher>();
+            //var consumer = host.Services.GetRequiredService<TelemetryConsumer>();
+            var telemetryUiDispatcher = host.Services.GetRequiredService<TelemetryUiDispatcher>();
 
             var cts = new CancellationTokenSource();
 
+            var alarmUiDispatcher = host.Services.GetRequiredService<AlarmUiDispatcher>();
+            alarmUiDispatcher.Start();
+
             // Start background tasks for producer and consumer 
             // 1️⃣ 先启动 consumer + dispatcher（必须先订阅）
-            _ = Task.Run(() => consumer.StartAsync(cts.Token));
+            // _ = Task.Run(() => consumer.StartAsync(cts.Token));
             //_ = Task.Run(() => dispatcher.StartAsync(cts.Token));
 
             // 2️⃣ 最后启动 producer
             //_ = Task.Run(() => producer.StartAsync(cts.Token));
 
-            var mqtt = host.Services.GetRequiredService<MqttTelemetryService>();
-            _ = Task.Run(() => mqtt.StartAsync(cts.Token));
+            //var mqtt = host.Services.GetRequiredService<MqttTelemetryService>();
+            //_ = Task.Run(() => mqtt.StartAsync(cts.Token));
 
             SetupGlobalExceptionHandling(host);
 

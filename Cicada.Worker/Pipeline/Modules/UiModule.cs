@@ -17,7 +17,7 @@ namespace Cicada.Biz.Plugins
             _dispatcher = dispatcher;
         }
 
-        public Task ProcessAsync(Telemetry data)
+        public Task ProcessAsync(Telemetry data, CancellationToken token = default)
         {
             _dispatcher.Publish(data);
             return Task.CompletedTask;

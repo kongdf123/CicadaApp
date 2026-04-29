@@ -9,6 +9,6 @@ namespace Cicada.Biz.Plugins
 {
     public interface IPipelineModule
     {
-        Task ProcessAsync(Telemetry data);
+        Task ProcessAsync(Telemetry data, CancellationToken token = default);
     }
 }

@@ -17,7 +17,7 @@ namespace Cicada.Biz.Plugins
             _repo = repo;
         }
 
-        public Task ProcessAsync(Telemetry data)
+        public Task ProcessAsync(Telemetry data, CancellationToken token = default)
         {
             return _repo.SaveAsync(data);
         }

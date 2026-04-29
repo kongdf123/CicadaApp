@@ -17,7 +17,7 @@ namespace Cicada.Biz.Plugins
             _influx = influx;
         }
 
-        public Task ProcessAsync(Telemetry data)
+        public Task ProcessAsync(Telemetry data, CancellationToken token = default)
         {
             return _influx.WriteAsync(data);
         }

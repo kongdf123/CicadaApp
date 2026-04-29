@@ -28,7 +28,7 @@ namespace Cicada.UI
             SetupAlarm(); 
 
             _dispatcher = dispatcher;
-            _dispatcher.OnData += HandleTelemetry;
+            //_dispatcher.OnData += HandleTelemetry;
             // _ = Test(repo);
 
             SetupChart();

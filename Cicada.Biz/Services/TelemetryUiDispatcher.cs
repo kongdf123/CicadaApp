@@ -23,12 +23,12 @@ namespace Cicada.Biz.Services
             OnData?.Invoke(data);
         }
 
-        //public async Task StartAsync(CancellationToken token)
-        //{
-        //    await foreach (var item in _channel.Reader.ReadAllAsync(token))
-        //    {
-        //        OnData?.Invoke(item);
-        //    }
-        //}
+        public async Task StartAsync(CancellationToken token)
+        {
+            await foreach (var item in _channel.Reader.ReadAllAsync(token))
+            {
+                OnData?.Invoke(item);
+            }
+        }
     }
 }

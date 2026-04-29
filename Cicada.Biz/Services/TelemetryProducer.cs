@@ -9,31 +9,31 @@ namespace Cicada.Biz.Services
 {
     public class TelemetryProducer
     {
-        private readonly TelemetryChannel _channel;
+        //private readonly TelemetryChannel _channel;
 
-        public TelemetryProducer(TelemetryChannel channel)
-        {
-            _channel = channel;
-        }
+        //public TelemetryProducer(TelemetryChannel channel)
+        //{
+        //    _channel = channel;
+        //}
 
-        public async Task StartAsync(CancellationToken token)
-        {
-            var random = new Random();
+        //public async Task StartAsync(CancellationToken token)
+        //{
+        //    var random = new Random();
 
-            while (!token.IsCancellationRequested)
-            {
-                var data = new Telemetry
-                {
-                    DeviceId = "Device1",
-                    Tag = "Temperature",
-                    Value = random.NextDouble() * 100,
-                    Timestamp = DateTime.UtcNow
-                };
+        //    while (!token.IsCancellationRequested)
+        //    {
+        //        var data = new Telemetry
+        //        {
+        //            DeviceId = "Device1",
+        //            Tag = "Temperature",
+        //            Value = random.NextDouble() * 100,
+        //            Timestamp = DateTime.UtcNow
+        //        };
 
-                await _channel.Writer.WriteAsync(data, token);
+        //        await _channel.Writer.WriteAsync(data, token);
 
-                await Task.Delay(500, token); // 模拟设备频率
-            }
-        }
+        //        await Task.Delay(500, token); // 模拟设备频率
+        //    }
+        //}
     }
 }
