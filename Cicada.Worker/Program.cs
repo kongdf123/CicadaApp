@@ -18,20 +18,24 @@ namespace Cicada.Worker
     {
         public static async Task Main(string[] args)
         {
-            // =========================
-            // 1. Logging (Serilog)
-            // =========================
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("logs/service-.log", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+            //// =========================
+            //// 1. Logging (Serilog)
+            //// =========================
+            //Log.Logger = new LoggerConfiguration()
+            //    .WriteTo.Console()
+            //    .WriteTo.File("logs/service-.log", rollingInterval: RollingInterval.Day)
+            //    .CreateLogger();
 
             try
             {
-                Log.Information("🚀 Starting Cicada Service...");
-
                 var host = Host.CreateDefaultBuilder(args)
-                    .UseSerilog()
+                    .UseSerilog((context, services, configuration) =>
+                    {
+                        configuration
+                            .ReadFrom.Configuration(context.Configuration)
+                            .ReadFrom.Services(services)
+                            .Enrich.FromLogContext();
+                    })
                     .ConfigureServices((context, services) =>
                     {
                         // =========================
@@ -98,6 +102,9 @@ namespace Cicada.Worker
                 // 7. Run
                 // =========================
                 await host.RunAsync();
+
+                Log.Information("🚀 Starting Cicada Service...");
+
             }
             catch (Exception ex)
             {
